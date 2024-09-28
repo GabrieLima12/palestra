@@ -24,7 +24,7 @@ public class LivroService {
 
     public List<LivroDTO> listarLivros(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return livroRepository.findAll(pageable).stream().map(LivroDTO::new).toList();
+        return livroRepository.findAllByDeletadoFalse(pageable).stream().map(LivroDTO::new).toList();
     }
 
     public List<LivroDTO> listarLivrosContains(
@@ -33,7 +33,7 @@ public class LivroService {
             String nome
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        return livroRepository.findByNomeContaining(pageable, nome).stream().map(LivroDTO::new).toList();
+        return livroRepository.findByNomeContainingAndDeletadoFalse(pageable, nome).stream().map(LivroDTO::new).toList();
     }
 
     public LivroDTO livroPorId(Integer id){
@@ -64,7 +64,8 @@ public class LivroService {
         Optional<Livro> livroOptional = livroRepository.findById(id);
         if (livroOptional.isPresent()) {
             Livro livro = livroOptional.get();
-            livroRepository.delete(livro);
+            livro.setDeletado(true);
+            livroRepository.save(livro);
         } else {
             throw new LivroException();
         }

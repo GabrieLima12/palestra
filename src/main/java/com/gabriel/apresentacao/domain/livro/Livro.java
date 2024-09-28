@@ -24,11 +24,13 @@ public class Livro {
     private LocalDate dataPublicacao;
     private String autor;
     private String categoria;
+    private boolean deletado;
 
     public Livro(LivroCadastro livroCadastro) {
         this.nome = livroCadastro.nome();
         this.dataPublicacao = livroCadastro.dataPublicacao();
         this.autor = livroCadastro.autor();
         this.categoria = livroCadastro.categoria();
+        this.deletado = false;
     }
 }

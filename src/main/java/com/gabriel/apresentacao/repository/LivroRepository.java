@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface LivroRepository extends JpaRepository<Livro, Integer> {
 
-    List<Livro> findByNomeContaining(Pageable pageable, String nome);
+    List<Livro> findByNomeContainingAndDeletadoFalse(Pageable pageable, String nome);
+    List<Livro> findAllByDeletadoFalse(Pageable pageable);
 }
